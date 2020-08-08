@@ -1,3 +1,4 @@
+#
 sudo: required
 services:
     - docker
@@ -20,3 +21,16 @@ after_success:
     - docker push yxlee245/multi-nginx
     - docker push yxlee245/multi-server
     - docker push yxlee245/multi-worker
+
+deploy:
+    edge: true
+    provider: elasticbeanstalk
+    region: us-east-2
+    app: multi-docker
+    env: MultiDocker-env
+    bucket_name: elasticbeanstalk-us-east-2-929817451908
+    bucket_path: docker-multi
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
